@@ -1,11 +1,5 @@
 package frc.robot.commands;
 
-/*
- * Code borrowed by Wren!
- * Originally from Plaid2024
- * David helped I guess
- * :3
- */
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
