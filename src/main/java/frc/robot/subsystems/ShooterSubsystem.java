@@ -1,22 +1,23 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Configs;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    private final WPI_TalonSRX shootermotor;
-
-    private boolean isBrakeOn = false;
+    private final SparkMax shootermotor;
 
     public ShooterSubsystem() {
 
-        shootermotor = new WPI_TalonSRX(5);
+        shootermotor = new SparkMax(5,MotorType.kBrushed);
 
-        shootermotor.setInverted(false);
+        shootermotor.configure(Configs.KitbotConfigs.shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        shootermotor.setNeutralMode(NeutralMode.Brake);
     }
 
     @Override
@@ -33,19 +34,19 @@ public class ShooterSubsystem extends SubsystemBase {
         shootermotor.set(0);
     }
 
-    public void setCoastMode() {
-        shootermotor.setNeutralMode(NeutralMode.Coast);
+    // public void setCoastMode() {
+    //     shootermotor.idleMode(IdleMode.kCoast);
 
-        isBrakeOn = false;
-    }
+    //     isBrakeOn = false;
+    // }
 
-    public void setBrakeMode() {
-        shootermotor.setNeutralMode(NeutralMode.Brake);
+    // public void setBrakeMode() {
+    //     shootermotor.setNeutralMode(NeutralMode.Brake);
 
-        isBrakeOn = true;
-    }
+    //     isBrakeOn = true;
+    // }
 
-    public boolean isBrakeOn() {
-        return isBrakeOn;
-    }
+    // public boolean isBrakeOn() {
+    //     return isBrakeOn;
+    // }
 }

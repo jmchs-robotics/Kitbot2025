@@ -1,41 +1,43 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Configs;
 
 public class DriveSubsystem extends SubsystemBase {
 
-    private final WPI_TalonSRX left1;
-    private final WPI_TalonSRX right2;
-    private final WPI_TalonSRX left3;
-    private final WPI_TalonSRX right4;
+    private final SparkMax left1;
+    private final SparkMax right2;
+    private final SparkMax left3;
+    private final SparkMax right4;
 
     private DifferentialDrive differentialDrive;
 
-    private boolean isBrakeOn = false;
-
     public DriveSubsystem() {
 
-        left1 = new WPI_TalonSRX(1);
-        left3 = new WPI_TalonSRX(3);
-        right2 = new WPI_TalonSRX(2);
-        right4 = new WPI_TalonSRX(4);
+        left1 = new SparkMax(1, MotorType.kBrushed);
+        left3 = new SparkMax(3, MotorType.kBrushed);
+        right2 = new SparkMax(2, MotorType.kBrushed);
+        right4 = new SparkMax(4, MotorType.kBrushed);
 
-        left1.setInverted(true);
-        left3.setInverted(true);
-        right2.setInverted(false);
-        right4.setInverted(false);
+        left1.configure(Configs.KitbotConfigs.driveLeftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        left3.configure(Configs.KitbotConfigs.driveLeftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        right2.configure(Configs.KitbotConfigs.driveRightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        right4.configure(Configs.KitbotConfigs.driveRightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        left1.setNeutralMode(NeutralMode.Coast);
-        left3.setNeutralMode(NeutralMode.Coast);
-        right2.setNeutralMode(NeutralMode.Coast);
-        right4.setNeutralMode(NeutralMode.Coast);
+        SparkMaxConfig leftFollowerConfig = new SparkMaxConfig();
+        leftFollowerConfig.follow(left1, false);
+        left3.configure(leftFollowerConfig, null, null);
 
-        left3.follow(left1);
-        right4.follow(right2);
+        SparkMaxConfig rightFollowerConfig = new SparkMaxConfig();
+        rightFollowerConfig.follow(right2, false);
+        right2.configure(rightFollowerConfig, null, null);
 
         differentialDrive = new DifferentialDrive(left1, right2);
     }
@@ -76,21 +78,21 @@ public class DriveSubsystem extends SubsystemBase {
         differentialDrive.arcadeDrive(forward, rotation);
     }
 
-    public void setCoastMode() {
-        left1.setNeutralMode(NeutralMode.Coast);
-        right2.setNeutralMode(NeutralMode.Coast);
+    // public void setCoastMode() {
+    //     left1.setNeutralMode(NeutralMode.Coast);
+    //     right2.setNeutralMode(NeutralMode.Coast);
 
-        isBrakeOn = false;
-    }
+    //     isBrakeOn = false;
+    // }
 
-    public void setBrakeMode() {
-        left1.setNeutralMode(NeutralMode.Brake);
-        right2.setNeutralMode(NeutralMode.Brake);
+    // public void setBrakeMode() {
+    //     left1.setNeutralMode(NeutralMode.Brake);
+    //     right2.setNeutralMode(NeutralMode.Brake);
 
-        isBrakeOn = true;
-    }
+    //     isBrakeOn = true;
+    // }
 
-    public boolean isBrakeOn() {
-        return isBrakeOn;
-    }
+    // public boolean isBrakeOn() {
+    //     return isBrakeOn;
+    // }
 }
