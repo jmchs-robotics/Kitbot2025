@@ -37,7 +37,7 @@ public class DriveSubsystem extends SubsystemBase {
 
         SparkMaxConfig rightFollowerConfig = new SparkMaxConfig();
         rightFollowerConfig.follow(right2, false);
-        right2.configure(rightFollowerConfig, null, null);
+        right4.configure(rightFollowerConfig, null, null);
 
         differentialDrive = new DifferentialDrive(left1, right2);
     }
