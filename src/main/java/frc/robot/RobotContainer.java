@@ -4,10 +4,10 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -22,8 +22,6 @@ public class RobotContainer {
 
   public final DriveSubsystem m_drive = new DriveSubsystem();
   public final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   private final XboxController driveController = new XboxController(0);
   private final JoystickButton driveA = new JoystickButton(driveController, XboxController.Button.kA.value);
@@ -42,11 +40,6 @@ public class RobotContainer {
     m_drive.setDefaultCommand(new DefaultDriveCommand(m_drive, driveController));
     m_shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(m_shooterSubsystem));
 
-    // Configure autonomous sendable chooser
-
-    m_chooser.setDefaultOption("Autonomous Command", new AutonomousCommand());
-
-    SmartDashboard.putData("Auto Mode", m_chooser);
   }
 
   public static RobotContainer getInstance() {
@@ -78,7 +71,7 @@ public class RobotContainer {
   */
   public Command getAutonomousCommand() {
     // The selected command will be run in autonomous
-    return m_chooser.getSelected();
+    return Commands.none();
   }
   
 
