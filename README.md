@@ -5,6 +5,7 @@ Most of our code either came with the original kitbot code or was ripped from ou
 The rest was stolen from other people who also probably stole the code first.
 That's just how programing works.
 Seriously, ask any programmer.
-\  - Wren(from school)
+
+\- Wren(from school)
 
 note: **Did you guys seriously forget to add a readme file? You guys should be ashamed of yourselves!**
