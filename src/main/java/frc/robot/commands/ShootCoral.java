@@ -19,7 +19,7 @@ public class ShootCoral extends Command {
 
     @Override
     public void execute() {
-        m_shooterSubsystem.setMotor(0.5);
+        m_shooterSubsystem.setMotor(0.8);
     }
 
     @Override
