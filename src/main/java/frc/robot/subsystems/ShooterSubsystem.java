@@ -14,7 +14,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public ShooterSubsystem() {
 
-        shootermotor = new SparkMax(5,MotorType.kBrushed);
+        shootermotor = new SparkMax(5, MotorType.kBrushed);
 
         shootermotor.configure(Configs.KitbotConfigs.shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -34,19 +34,4 @@ public class ShooterSubsystem extends SubsystemBase {
         shootermotor.set(0);
     }
 
-    // public void setCoastMode() {
-    //     shootermotor.idleMode(IdleMode.kCoast);
-
-    //     isBrakeOn = false;
-    // }
-
-    // public void setBrakeMode() {
-    //     shootermotor.setNeutralMode(NeutralMode.Brake);
-
-    //     isBrakeOn = true;
-    // }
-
-    // public boolean isBrakeOn() {
-    //     return isBrakeOn;
-    // }
 }

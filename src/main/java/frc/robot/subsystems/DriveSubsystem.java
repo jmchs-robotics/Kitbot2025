@@ -26,18 +26,10 @@ public class DriveSubsystem extends SubsystemBase {
         right2 = new SparkMax(2, MotorType.kBrushed);
         right4 = new SparkMax(4, MotorType.kBrushed);
 
-        left1.configure(Configs.KitbotConfigs.driveLeftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        left3.configure(Configs.KitbotConfigs.driveLeftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        right2.configure(Configs.KitbotConfigs.driveRightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        right4.configure(Configs.KitbotConfigs.driveRightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-        SparkMaxConfig leftFollowerConfig = new SparkMaxConfig();
-        leftFollowerConfig.follow(left1, false);
-        left3.configure(leftFollowerConfig, null, null);
-
-        SparkMaxConfig rightFollowerConfig = new SparkMaxConfig();
-        rightFollowerConfig.follow(right2, false);
-        right4.configure(rightFollowerConfig, null, null);
+        left1.configure(Configs.KitbotConfigs.driveLeftPrimaryConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        left3.configure(Configs.KitbotConfigs.driveLeftFollowerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        right2.configure(Configs.KitbotConfigs.driveRightPrimaryConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        right4.configure(Configs.KitbotConfigs.driveRightFollowerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         differentialDrive = new DifferentialDrive(left1, right2);
     }
@@ -78,21 +70,9 @@ public class DriveSubsystem extends SubsystemBase {
         differentialDrive.arcadeDrive(forward, rotation);
     }
 
-    // public void setCoastMode() {
-    //     left1.setNeutralMode(NeutralMode.Coast);
-    //     right2.setNeutralMode(NeutralMode.Coast);
+    public void tankDrive(double leftVal, double rightVal) {
+        setLeftMotors(leftVal);
+        setRightMotors(rightVal);
+    }
 
-    //     isBrakeOn = false;
-    // }
-
-    // public void setBrakeMode() {
-    //     left1.setNeutralMode(NeutralMode.Brake);
-    //     right2.setNeutralMode(NeutralMode.Brake);
-
-    //     isBrakeOn = true;
-    // }
-
-    // public boolean isBrakeOn() {
-    //     return isBrakeOn;
-    // }
 }
