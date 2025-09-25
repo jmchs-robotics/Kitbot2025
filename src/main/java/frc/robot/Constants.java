@@ -32,15 +32,7 @@ public class Constants {
     */ 
     public static final class AlgaeConstants {
 
-        public static final int flipMotorId = 0;
         public static final int wheelMotorId = 1;
-
-        public static final double kP = 15;
-        public static final double kI = 2;
-        public static final double kD = 0.2;
-
-         public static final Angle kAngleDown = edu.wpi.first.units.Units.Rotations.of(0);
-        public static final Angle kAngleUp = edu.wpi.first.units.Units.Rotations.of(-0.26);
 
     }
 }
