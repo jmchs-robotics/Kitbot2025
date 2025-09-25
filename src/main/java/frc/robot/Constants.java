@@ -11,6 +11,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.units.measure.Angle;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -28,5 +30,18 @@ public class Constants {
     *   public static final int kRightMotor2Port = 3; 
     * }
     */ 
+    public static final class AlgaeConstants {
+
+        public static final int flipMotorId = 0;
+        public static final int wheelMotorId = 1;
+
+        public static final double kP = 15;
+        public static final double kI = 2;
+        public static final double kD = 0.2;
+
+         public static final Angle kAngleDown = edu.wpi.first.units.Units.Rotations.of(0);
+        public static final Angle kAngleUp = edu.wpi.first.units.Units.Rotations.of(-0.26);
+
+    }
 }
 
