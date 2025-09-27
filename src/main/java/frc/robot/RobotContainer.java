@@ -22,9 +22,14 @@ public class RobotContainer {
 
   public final DriveSubsystem m_drive = new DriveSubsystem();
   public final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  public final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
 
   private final XboxController driveController = new XboxController(0);
-  private final JoystickButton driveA = new JoystickButton(driveController, XboxController.Button.kA.value);
+  private final XboxController operatorController = new XboxController(1);
+
+  private final JoystickButton operateA = new JoystickButton(operatorController, XboxController.Button.kA.value);
+  private final JoystickButton operateY = new JoystickButton(operatorController, XboxController.Button.kY.value);
+  private final JoystickButton operateX = new JoystickButton(operatorController, XboxController.Button.kX.value);
 
   /**
   * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -39,6 +44,7 @@ public class RobotContainer {
     // Configure default command
     m_drive.setDefaultCommand(new DefaultDriveCommand(m_drive, driveController));
     m_shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(m_shooterSubsystem));
+    m_algaeSubsystem.setDefaultCommand(new DefaultAlgaeCommand(m_algaeSubsystem));
 
   }
 
@@ -54,8 +60,16 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    driveA.whileTrue(
+    operateA.whileTrue(
       new ShootCoral(m_shooterSubsystem)
+    );
+
+    operateY.whileTrue(
+      new AlgaeIntake(m_algaeSubsystem)
+    );
+
+    operateX.whileTrue(
+      new AlgaeExtake(m_algaeSubsystem)
     );
 
   }
