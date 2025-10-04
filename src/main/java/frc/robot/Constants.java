@@ -32,7 +32,7 @@ public class Constants {
     */ 
     public static final class AlgaeConstants {
 
-        public static final int wheelMotorId = 1;
+        public static final int wheelMotorId = 6;
 
     }
 }
