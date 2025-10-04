@@ -2,8 +2,15 @@ package frc.robot;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.PathPlannerPath;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,6 +37,8 @@ public class RobotContainer {
   private final JoystickButton operateA = new JoystickButton(operatorController, XboxController.Button.kA.value);
   private final JoystickButton operateY = new JoystickButton(operatorController, XboxController.Button.kY.value);
   private final JoystickButton operateX = new JoystickButton(operatorController, XboxController.Button.kX.value);
+  
+  private final SendableChooser<Command> autoChooser;
 
   /**
   * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -45,6 +54,16 @@ public class RobotContainer {
     m_drive.setDefaultCommand(new DefaultDriveCommand(m_drive, driveController));
     m_shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(m_shooterSubsystem));
     m_algaeSubsystem.setDefaultCommand(new DefaultAlgaeCommand(m_algaeSubsystem));
+
+    NamedCommands.registerCommand("ShootCoral", new ShootCoral(m_shooterSubsystem));
+
+      // Build an auto chooser. This will use Commands.none() as the default option.
+      autoChooser = AutoBuilder.buildAutoChooser();
+  
+      // Another option that allows you to specify the default auto by its name
+      // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
+  
+    SmartDashboard.putData("Auto Chooser", autoChooser);
 
   }
 
@@ -83,11 +102,24 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
   */
-  public Command getAutonomousCommand() {
-    // The selected command will be run in autonomous
-    return Commands.none();
-  }
+  // public Command getAutonomousCommand() {
+  //   // The selected command will be run in autonomous
+  //   return Commands.none();
+  // }
+
+  // public Command getAutonomousCommand() {
+  //   try {
+  //     PathPlannerPath path = PathPlannerPath.fromPathFile(null);
+  //     return AutoBuilder.followPath(path);
+  //   } catch (Exception e) {
+  //     DriverStation.reportError("Big oops: " + e.getMessage(), e.getStackTrace());
+  //     return Commands.none();
+  //   }
+  // }
   
+    public Command getAutonomousCommand() {
+      return autoChooser.getSelected();
+    }
 
 }
 
