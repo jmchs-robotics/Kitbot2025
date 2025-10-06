@@ -7,10 +7,10 @@ import com.pathplanner.lib.controllers.PPLTVController;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -25,6 +25,10 @@ import frc.robot.Configs;
 
 public class DriveSubsystem extends SubsystemBase {
 
+    // This is the max speed you guys set in pathplanner
+    // TODO: actually measure the max speed
+    private final double maxSpeedMPS = 4.5;
+
     private final SparkMax left1;
     private final SparkMax right2;
     private final SparkMax left3;
@@ -34,10 +38,9 @@ public class DriveSubsystem extends SubsystemBase {
 
     private AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
 
-    public DifferentialDriveOdometry m_odometry;
+    private  DifferentialDriveOdometry m_odometry;
 
-    DifferentialDriveKinematics kinematics =
-        new DifferentialDriveKinematics(Units.inchesToMeters(21.5));
+    private DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(21.5));
 
     public DriveSubsystem() {
 
@@ -55,10 +58,14 @@ public class DriveSubsystem extends SubsystemBase {
 
         m_odometry = new DifferentialDriveOdometry(
             new Rotation2d(gyro.getYaw()),
-            left1.getEncoder().getPosition(), right2.getEncoder().getPosition(),
-            new Pose2d());
+            left1.getEncoder().getPosition(),
+            right2.getEncoder().getPosition(),
+            new Pose2d()
+        );
 
-        RobotConfig config;
+        // Had to set it to null initially, otherwise the AutoBuilder.config would get mad
+        // That config might not have been initialized yet
+        RobotConfig config = null;
         try {
             config = RobotConfig.fromGUISettings();
         } catch (Exception e) {
@@ -79,11 +86,11 @@ public class DriveSubsystem extends SubsystemBase {
             // This will flip the path being followed to the red side of the field.
             // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-            var alliance = DriverStation.getAlliance();
-            if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;
-            }
-            return false;
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
             },
             this // Reference to this subsystem to set requirements
         );
@@ -93,7 +100,8 @@ public class DriveSubsystem extends SubsystemBase {
     public void periodic() {
         m_odometry.update(
             new Rotation2d(gyro.getYaw()),
-            left1.getEncoder().getPosition(), right2.getEncoder().getPosition()
+            left1.getEncoder().getPosition(),
+            right2.getEncoder().getPosition()
         );
     }
 
@@ -144,16 +152,30 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     public ChassisSpeeds getRobotRelativeSpeeds() {
-        return ChassisSpeeds.fromRobotRelativeSpeeds(
-            (double) gyro.getRobotCentricVelocityX(),
-            0,
-            gyro.getRate(),
-            new Rotation2d(gyro.getYaw())
+        // .get() returns a value between [-1, 1] of what the motor is currently set to
+        // In theory this should work even in autonomous
+        // because pathplanner does have to set the motors to a speed to actually move the robot
+        DifferentialDriveWheelSpeeds wheelSpeeds = new DifferentialDriveWheelSpeeds(
+            left1.get() * maxSpeedMPS,
+            right2.get() * maxSpeedMPS
         );
+
+        return kinematics.toChassisSpeeds(wheelSpeeds);
     }
 
     public void driveRobotRelative(ChassisSpeeds speeds) {
-        differentialDrive.
+        // This is how we convert the given ChassisSpeeds to wheel speeds that we can use
+        // (This is why we needed the kinematics)
+        DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(speeds);
+
+        // I think the clamping between [-1, 1] is technically unnecessary
+        // But I did it anyways because it makes me feel better
+        // wheelSpeeds.sideMetersPerSec / maxSpeedMPS should give a value between -1 and 1 anyways
+        // which we can then use in our tank drive, because it only takes in values of [-1, 1]
+        double leftVal = MathUtil.clamp(wheelSpeeds.leftMetersPerSecond / maxSpeedMPS, -1, 1);
+        double rightVal = MathUtil.clamp(wheelSpeeds.rightMetersPerSecond / maxSpeedMPS, -1, 1);
+
+        tankDrive(leftVal, rightVal);
     }
 
 }
