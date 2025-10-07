@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.AlgaeConstants;
@@ -9,11 +8,11 @@ import frc.robot.Constants.AlgaeConstants;
 
 public class AlgaeSubsystem extends SubsystemBase{
     
-    private final SparkMax wheelMotor;
+    private final TalonFX wheelMotor;
 
     public AlgaeSubsystem() {
 
-        wheelMotor = new SparkMax(AlgaeConstants.wheelMotorId, MotorType.kBrushless);
+        wheelMotor = new TalonFX(AlgaeConstants.wheelMotorId);
         
     }
 
