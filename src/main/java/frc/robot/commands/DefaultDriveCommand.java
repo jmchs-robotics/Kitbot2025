@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveSubsystem;
@@ -9,6 +10,8 @@ public class DefaultDriveCommand extends Command {
 
     private final DriveSubsystem m_driveSubsystem;
     private final XboxController m_controller;
+
+    private final SlewRateLimiter limiter = new SlewRateLimiter(3, -3, 0);
 
     public DefaultDriveCommand(DriveSubsystem driveSubsystem, XboxController controller) {
         
@@ -25,8 +28,8 @@ public class DefaultDriveCommand extends Command {
     @Override
     public void execute() {
         m_driveSubsystem.arcadeDrive(
-            MathUtil.applyDeadband(m_controller.getLeftY(), 0.1), 
-            MathUtil.applyDeadband(m_controller.getLeftX(), 0.1)
+            limiter.calculate(MathUtil.applyDeadband(m_controller.getLeftY(), 0.1)), 
+            MathUtil.applyDeadband(m_controller.getLeftX()*0.75, 0.1)
         );
 
         // m_driveSubsystem.tankDrive(
