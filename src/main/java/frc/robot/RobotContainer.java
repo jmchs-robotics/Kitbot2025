@@ -54,9 +54,32 @@ public class RobotContainer {
 
     // Configure default command
     m_drive.setDefaultCommand(new DefaultDriveCommand(m_drive, driveController));
+
+
+
+
+
+
+
+
+    
+    
+
+    //TODO made the shooter subsystem and set the default command and set it to default command m_shooterSubsystetem
     m_shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(m_shooterSubsystem));
+
+
+
+
+
+
+
+
+    
     m_algaeSubsystem.setDefaultCommand(new DefaultAlgaeCommand(m_algaeSubsystem));
 
+
+    //TODO look at this this is to register the command in the container
     NamedCommands.registerCommand("ShootCoral", new ShootCoral(m_shooterSubsystem));
 
     // Build an auto chooser. This will use Commands.none() as the default option.
@@ -82,6 +105,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     operateA.whileTrue(
+      // use new ShootCoral(m_shooterSubsystem)     this implements the command to the button
       new ShootCoral(m_shooterSubsystem)
     );
 
