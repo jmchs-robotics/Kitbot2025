@@ -9,7 +9,8 @@ public class DefaultShooterCommand extends Command {
 
     public DefaultShooterCommand(ShooterSubsystem shooterSubsystem) {
         
-        // requirements and deinitions
+        m_shooterSubsystem = shooterSubsystem;
+        addRequirements(m_shooterSubsystem);
 
     }
 
@@ -18,11 +19,10 @@ public class DefaultShooterCommand extends Command {
 
     @Override
     public void execute() {
-        //stop the motor
+        m_shooterSubsystem.stopMotor();
     }
 
     @Override
     public void end(boolean interrupted) {
-        //stop the motor
-    }
-}
+        m_shooterSubsystem.stopMotor();
+    }}
