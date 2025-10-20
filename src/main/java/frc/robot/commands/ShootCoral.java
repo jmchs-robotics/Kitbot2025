@@ -9,8 +9,7 @@ public class ShootCoral extends Command {
 
     public ShootCoral(ShooterSubsystem shooterSubsystem) {
         
-        m_shooterSubsystem = shooterSubsystem;
-        addRequirements(m_shooterSubsystem);
+        //define the subsystem and add requirements.
 
     }
 
@@ -19,11 +18,12 @@ public class ShootCoral extends Command {
 
     @Override
     public void execute() {
-        m_shooterSubsystem.setMotor(0.8);
+        // this is setting motor speeds
     }
 
     @Override
+        
     public void end(boolean interrupted) {
-        m_shooterSubsystem.stopMotor();
+        // this is to stop the motor
     }
 }
