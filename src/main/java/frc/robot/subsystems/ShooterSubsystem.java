@@ -14,7 +14,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public ShooterSubsystem() {
 
-        shootermotor = new SparkMax(5, MotorType.kBrushed);
+        // made a new shootermotor that is a sparkmax for 5 and kBrushed
 
         shootermotor.configure(Configs.KitbotConfigs.shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
