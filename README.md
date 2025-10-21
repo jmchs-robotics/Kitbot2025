@@ -9,3 +9,8 @@ Seriously, ask any programmer.
 \- Wren(from school)
 
 note: **Did you guys seriously forget to add a readme file? You guys should be ashamed of yourselves!**
+
+ !! Hey hey rookies! To show that you have done this part software training (1.1.1) 
+please type your name bellow with the date completed and your favorite pokemon. 
+\- Your software captains Addie and Ananda & mentor Ms. Graham 
+\-\-addie-hinckley, ap-LeppaBerry, MsGraham
