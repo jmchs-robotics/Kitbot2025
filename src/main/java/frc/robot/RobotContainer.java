@@ -36,7 +36,7 @@ public class RobotContainer {
   private final XboxController driveController = new XboxController(0);
   private final XboxController operatorController = new XboxController(1);
 
-  private final JoystickButton operateA = new JoystickButton(operatorController, XboxController.Button.kA.value);
+  // TODO add coral button
   private final JoystickButton operateY = new JoystickButton(operatorController, XboxController.Button.kY.value);
   private final JoystickButton operateX = new JoystickButton(operatorController, XboxController.Button.kX.value);
   
@@ -66,7 +66,7 @@ public class RobotContainer {
     
 
     //TODO made the shooter subsystem and set the default command and set it to default command m_shooterSubsystetem
-    m_shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(m_shooterSubsystem));
+    
 
 
 
@@ -104,10 +104,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    operateA.whileTrue(
-      // use new ShootCoral(m_shooterSubsystem)     this implements the command to the button
-      new ShootCoral(m_shooterSubsystem)
-    );
+    //TODO tell the button what to do
 
     operateY.whileTrue(
       new AlgaeIntake(m_algaeSubsystem)
