@@ -14,9 +14,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public ShooterSubsystem() {
 
-        // made a new shootermotor that is a sparkmax for 5 and kBrushed
-
-        shootermotor.configure(Configs.KitbotConfigs.shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        // make a new shootermotor that is a sparkmax for 5 and kBrushed
+        // make the configs for it
+        
 
     }
 
@@ -27,11 +27,11 @@ public class ShooterSubsystem extends SubsystemBase {
     public void simulationPeriodic() {}
 
     public void setMotor(double speed) {
-        shootermotor.set(speed);
+        // set the speed of the motor
     }    
 
     public void stopMotor() {
-        shootermotor.set(0);
+        // stop the motor
     }
 
 }
