@@ -19,5 +19,4 @@ example: Addie Hinckley 10/20/25 Slowpoke
 
 Nixon Draper 10/30/25 Meganium
 
-Sean, 10/30/25, Torchic test test
-something here
+Sean, 10/30/25, Torchic
