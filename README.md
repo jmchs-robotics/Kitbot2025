@@ -1,16 +1,13 @@
 # Kitbot2025
-Basically our side quest
-As programmers, none of us know how to actually program.
-Most of our code either came with the original kitbot code or was ripped from our old robots.
-The rest was stolen from other people who also probably stole the code first.
-That's just how programing works.
-Seriously, ask any programmer.
+Hello from FRC team 5933, this is the code for our 2025 kitbot (Reefscape).
+We are making many changes to the code at this time, which may make it confusing.
+(We are also using this to train our software members)
+Our goal is to make it more interactive with people, specifically at festivals and school visits.
+Thank you for your continued patience as we continue to help this bot to evolve with our team and it's needs.
 
-\- Wren(from school)
+\- addie-hinckley
 
-note: **Did you guys seriously forget to add a readme file? You guys should be ashamed of yourselves!**
-
- !! Hey hey rookies! To show that you have done this part software training
+!! Hey hey rookies! To show that you have done this part software training
 please type your name bellow with the date completed and your favorite pokemon. 
 \- Your software captains Addie and Ananda & mentor Ms. Graham 
 \-\-addie-hinckley, ap-LeppaBerry, MsGraham
