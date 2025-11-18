@@ -32,6 +32,7 @@ public class RobotContainer {
   public final DriveSubsystem m_drive = new DriveSubsystem();
   public final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   public final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
+  public final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
 
   private final XboxController driveController = new XboxController(0);
   private final XboxController operatorController = new XboxController(1);
@@ -56,7 +57,7 @@ public class RobotContainer {
     m_drive.setDefaultCommand(new DefaultDriveCommand(m_drive, driveController));
     m_shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(m_shooterSubsystem));
     m_algaeSubsystem.setDefaultCommand(new DefaultAlgaeCommand(m_algaeSubsystem));
-
+    m_ledSubsystem.setDefaultCommand(new LEDCommand(m_ledSubsystem));
     NamedCommands.registerCommand("ShootCoral", new ShootCoral(m_shooterSubsystem));
 
     // Build an auto chooser. This will use Commands.none() as the default option.
