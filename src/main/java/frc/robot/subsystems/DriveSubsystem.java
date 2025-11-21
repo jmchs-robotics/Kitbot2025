@@ -1,12 +1,13 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.SparkMax;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPLTVController;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
 
@@ -22,7 +23,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Configs;
 
 @Logged
 public class DriveSubsystem extends SubsystemBase {
@@ -31,10 +31,10 @@ public class DriveSubsystem extends SubsystemBase {
     // TODO: actually measure the max speed
     private final double maxSpeedMPS = 4.5;
 
-    private final SparkMax left1;
-    private final SparkMax right2;
-    private final SparkMax left3;
-    private final SparkMax right4;
+    private final TalonFX left1;
+    private final TalonFX right2;
+    private final TalonFX left3;
+    private final TalonFX right4;
 
     private DifferentialDrive differentialDrive;
 
@@ -46,22 +46,38 @@ public class DriveSubsystem extends SubsystemBase {
 
     public DriveSubsystem() {
 
-        left1 = new SparkMax(1, MotorType.kBrushed);
-        left3 = new SparkMax(3, MotorType.kBrushed);
-        right2 = new SparkMax(2, MotorType.kBrushed);
-        right4 = new SparkMax(4, MotorType.kBrushed);
+        left1 = new TalonFX(1);
+        left3 = new TalonFX(3);
+        right2 = new TalonFX(2);
+        right4 = new TalonFX(4);
 
-        left1.configure(Configs.KitbotConfigs.driveLeftPrimaryConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        left3.configure(Configs.KitbotConfigs.driveLeftFollowerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        right2.configure(Configs.KitbotConfigs.driveRightPrimaryConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        right4.configure(Configs.KitbotConfigs.driveRightFollowerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        TalonFXConfiguration motorConfigLeft = new TalonFXConfiguration();
+        motorConfigLeft.CurrentLimits.StatorCurrentLimit = 50;
+        motorConfigLeft.CurrentLimits.StatorCurrentLimitEnable = true;
+        motorConfigLeft.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        motorConfigLeft.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
-        differentialDrive = new DifferentialDrive(left1, right2);
+        TalonFXConfiguration motorConfigRight = new TalonFXConfiguration();
+        motorConfigRight.CurrentLimits.StatorCurrentLimit = 50;
+        motorConfigRight.CurrentLimits.StatorCurrentLimitEnable = true;
+        motorConfigRight.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        motorConfigRight.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+
+
+        left1.getConfigurator().apply(motorConfigLeft);
+        left3.getConfigurator().apply(motorConfigLeft);
+        right2.getConfigurator().apply(motorConfigRight);
+        right4.getConfigurator().apply(motorConfigRight);
+
+        left3.setControl(new Follower(left1.getDeviceID(), false));
+        right4.setControl(new Follower(right2.getDeviceID(), false));
+
+        differentialDrive = new DifferentialDrive(left1::set, right2::set);
 
         m_odometry = new DifferentialDriveOdometry(
             new Rotation2d(gyro.getYaw()),
-            left1.getEncoder().getPosition(),
-            right2.getEncoder().getPosition(),
+            left1.getPosition().getValueAsDouble(),
+            right2.getPosition().getValueAsDouble(),
             new Pose2d()
         );
 
@@ -102,8 +118,8 @@ public class DriveSubsystem extends SubsystemBase {
     public void periodic() {
         m_odometry.update(
             new Rotation2d(gyro.getYaw()),
-            left1.getEncoder().getPosition(),
-            right2.getEncoder().getPosition()
+            left1.getPosition().getValueAsDouble(),
+            right2.getPosition().getValueAsDouble()
         );
     }
 
