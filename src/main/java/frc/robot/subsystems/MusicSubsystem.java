@@ -10,14 +10,17 @@ public class MusicSubsystem extends SubsystemBase{
     
     private final Orchestra orchestra;
     private final TalonFX algaeMusicMotor;
+    private final TalonFX coralMusicMotor;
 
     public MusicSubsystem() {
         
         orchestra = new Orchestra();
         algaeMusicMotor = new TalonFX(AlgaeConstants.wheelMotorId);
+        coralMusicMotor = new TalonFX(5);
 
         orchestra.addInstrument(algaeMusicMotor);
-        var status = orchestra.loadMusic("");
+        orchestra.addInstrument(coralMusicMotor);
+        var status = orchestra.loadMusic("src/main/deploy/output.chrp");
 
     }
 

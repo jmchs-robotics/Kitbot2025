@@ -32,10 +32,12 @@ public class RobotContainer {
   public final DriveSubsystem m_drive = new DriveSubsystem();
   public final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   public final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
+  public final MusicSubsystem m_musicSubsystem = new MusicSubsystem();
 
   private final XboxController driveController = new XboxController(0);
   private final XboxController operatorController = new XboxController(1);
 
+  private final JoystickButton driveRB = new JoystickButton(driveController, XboxController.Button.kRightBumper.value);
   private final JoystickButton operateA = new JoystickButton(operatorController, XboxController.Button.kA.value);
   private final JoystickButton operateY = new JoystickButton(operatorController, XboxController.Button.kY.value);
   private final JoystickButton operateX = new JoystickButton(operatorController, XboxController.Button.kX.value);
@@ -80,6 +82,10 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+    driveRB.toggleOnTrue(
+      new MusicCommand(m_musicSubsystem)
+    );
 
     operateA.whileTrue(
       new ShootCoral(m_shooterSubsystem)
