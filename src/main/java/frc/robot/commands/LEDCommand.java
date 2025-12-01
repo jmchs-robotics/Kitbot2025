@@ -27,12 +27,12 @@ public class LEDCommand extends Command {
 
     }
 
-        @Override
-        public boolean isFinished() {
-            return false;
-        }
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 
-        @Override
-        public void end(boolean interrupted) {}
+    @Override
+    public void end(boolean interrupted) {}
     
 }

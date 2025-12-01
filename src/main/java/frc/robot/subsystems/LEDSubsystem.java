@@ -35,19 +35,19 @@ public class LEDSubsystem extends SubsystemBase {
     }
 
 
-    private final LEDPattern m_rainbow = LEDPattern.rainbow(255, 128);
-        private static final Distance kLedSpacing = Meters.of(1 / 120.0);
+    // private final LEDPattern m_rainbow = LEDPattern.rainbow(255, 128);
+    //     private static final Distance kLedSpacing = Meters.of(1 / 120.0);
 
-        private final LEDPattern m_scrollingRainbow = m_rainbow.scrollAtAbsoluteSpeed(MetersPerSecond.of(1), kLedSpacing);
+    //     private final LEDPattern m_scrollingRainbow = m_rainbow.scrollAtAbsoluteSpeed(MetersPerSecond.of(1), kLedSpacing);
 
-    public void robotPeriodic() {
+    // public void robotPeriodic() {
 
-        m_scrollingRainbow.applyTo(m_ledBuffer);
-        m_led.setData(m_ledBuffer);
+    //     m_scrollingRainbow.applyTo(m_ledBuffer);
+    //     m_led.setData(m_ledBuffer);
 
-    }
-
-
+    // }
 
 
+
+    
 }
