@@ -22,7 +22,7 @@ public class LEDCommand extends Command {
     @Override
     public void execute() {
 
-        LEDPattern pattern = LEDPattern.solid(Color.kWhite);
+        LEDPattern pattern = LEDPattern.rainbow(255, 128);
         m_led.setLEDPattern(pattern);
 
     }

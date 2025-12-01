@@ -11,7 +11,7 @@ import edu.wpi.first.units.measure.Distance;
 
 public class LEDSubsystem extends SubsystemBase {
 
-    private AddressableLED m_led = new AddressableLED(9);
+    private AddressableLED m_led = new AddressableLED(0);
     private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(150);
 
     public LEDSubsystem() {
@@ -35,17 +35,10 @@ public class LEDSubsystem extends SubsystemBase {
     }
 
 
-    // private final LEDPattern m_rainbow = LEDPattern.rainbow(255, 128);
-    //     private static final Distance kLedSpacing = Meters.of(1 / 120.0);
+     private final LEDPattern m_rainbow = LEDPattern.rainbow(255, 128);
+        private static final Distance kLedSpacing = Meters.of(1 / 120.0);
 
-    //     private final LEDPattern m_scrollingRainbow = m_rainbow.scrollAtAbsoluteSpeed(MetersPerSecond.of(1), kLedSpacing);
-
-    // public void robotPeriodic() {
-
-    //     m_scrollingRainbow.applyTo(m_ledBuffer);
-    //     m_led.setData(m_ledBuffer);
-
-    // }
+         private final LEDPattern m_scrollingRainbow = m_rainbow.scrollAtAbsoluteSpeed(MetersPerSecond.of(1), kLedSpacing);
 
 
 
