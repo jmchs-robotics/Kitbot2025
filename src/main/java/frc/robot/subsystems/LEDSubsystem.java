@@ -11,7 +11,7 @@ import edu.wpi.first.units.measure.Distance;
 
 public class LEDSubsystem extends SubsystemBase {
 
-    private AddressableLED m_led = new AddressableLED(9);
+    private AddressableLED m_led = new AddressableLED(0);
     private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(150);
 
     public LEDSubsystem() {
