@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.AlgaeConstants;
 
@@ -21,6 +22,12 @@ public class MusicSubsystem extends SubsystemBase{
         orchestra.addInstrument(algaeMusicMotor);
         orchestra.addInstrument(coralMusicMotor);
         var status = orchestra.loadMusic("src/main/deploy/output.chrp");
+
+        if (status.isOK()) {
+            orchestra.loadMusic("src/main/deploy/output.chrp");
+        } else {
+            DriverStation.reportWarning("orchestra status bad", false);
+        }
 
     }
 
