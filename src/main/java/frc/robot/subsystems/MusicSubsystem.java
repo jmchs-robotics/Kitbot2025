@@ -21,10 +21,10 @@ public class MusicSubsystem extends SubsystemBase{
 
         orchestra.addInstrument(algaeMusicMotor);
         orchestra.addInstrument(coralMusicMotor);
-        var status = orchestra.loadMusic("src/main/deploy/output.chrp");
+        var status = orchestra.loadMusic("output.chrp");
 
         if (status.isOK()) {
-            orchestra.loadMusic("src/main/deploy/output.chrp");
+            orchestra.loadMusic("output.chrp");
         } else {
             DriverStation.reportWarning("orchestra status bad", false);
         }

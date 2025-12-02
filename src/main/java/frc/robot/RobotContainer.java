@@ -83,7 +83,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    driveRB.toggleOnTrue(
+    driveRB.onTrue(
       new MusicCommand(m_musicSubsystem)
     );
 
