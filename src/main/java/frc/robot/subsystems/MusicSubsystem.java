@@ -15,8 +15,8 @@ public class MusicSubsystem extends SubsystemBase{
     public MusicSubsystem() {
         
         orchestra = new Orchestra();
-        algaeMusicMotor = new TalonFX(AlgaeConstants.wheelMotorId);
-        coralMusicMotor = new TalonFX(5);
+        algaeMusicMotor = new TalonFX(2);
+        coralMusicMotor = new TalonFX(1);
 
         orchestra.addInstrument(algaeMusicMotor);
         orchestra.addInstrument(coralMusicMotor);
