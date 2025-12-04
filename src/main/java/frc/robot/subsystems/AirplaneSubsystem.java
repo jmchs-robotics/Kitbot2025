@@ -7,13 +7,13 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ShooterSubsystem extends SubsystemBase {
+public class AirplaneSubsystem extends SubsystemBase {
 
-    private final TalonFX shootermotor;
+    private final TalonFX airplaneMotor;
 
-    public ShooterSubsystem() {
+    public AirplaneSubsystem() {
 
-        shootermotor = new TalonFX(5);
+        airplaneMotor = new TalonFX(5);
 
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
         motorConfig.CurrentLimits.StatorCurrentLimit = 50;
@@ -21,7 +21,7 @@ public class ShooterSubsystem extends SubsystemBase {
         motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         motorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         
-        shootermotor.getConfigurator().apply(motorConfig);
+        airplaneMotor.getConfigurator().apply(motorConfig);
 
     }
 
@@ -32,11 +32,11 @@ public class ShooterSubsystem extends SubsystemBase {
     public void simulationPeriodic() {}
 
     public void setMotor(double speed) {
-        shootermotor.set(speed);
+        airplaneMotor.set(speed);
     }    
 
     public void stopMotor() {
-        shootermotor.set(0);
+        airplaneMotor.set(0);
     }
 
 }

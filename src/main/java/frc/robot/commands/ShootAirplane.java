@@ -1,13 +1,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.AirplaneSubsystem;
 
-public class ShootCoral extends Command {
+public class ShootAirplane extends Command {
 
-    private final ShooterSubsystem m_shooterSubsystem;
+    private final AirplaneSubsystem m_shooterSubsystem;
 
-    public ShootCoral(ShooterSubsystem shooterSubsystem) {
+    public ShootAirplane(AirplaneSubsystem shooterSubsystem) {
         
         m_shooterSubsystem = shooterSubsystem;
         addRequirements(m_shooterSubsystem);

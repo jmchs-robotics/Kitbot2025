@@ -30,7 +30,7 @@ public class RobotContainer {
   private static RobotContainer m_robotContainer = new RobotContainer();
 
   public final DriveSubsystem m_drive = new DriveSubsystem();
-  public final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  public final AirplaneSubsystem m_airplaneSubsystem = new AirplaneSubsystem();
   public final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
 
   private final XboxController driveController = new XboxController(0);
@@ -54,10 +54,10 @@ public class RobotContainer {
 
     // Configure default command
     m_drive.setDefaultCommand(new DefaultDriveCommand(m_drive, driveController));
-    m_shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(m_shooterSubsystem));
+    m_airplaneSubsystem.setDefaultCommand(new DefaultAirplaneCommand(m_airplaneSubsystem));
     m_algaeSubsystem.setDefaultCommand(new DefaultAlgaeCommand(m_algaeSubsystem));
 
-    NamedCommands.registerCommand("ShootCoral", new ShootCoral(m_shooterSubsystem));
+    NamedCommands.registerCommand("ShootCoral", new ShootAirplane(m_airplaneSubsystem));
 
     // Build an auto chooser. This will use Commands.none() as the default option.
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -82,7 +82,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     operateA.whileTrue(
-      new ShootCoral(m_shooterSubsystem)
+      new ShootAirplane(m_airplaneSubsystem)
     );
 
     operateY.whileTrue(
