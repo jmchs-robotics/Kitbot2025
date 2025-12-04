@@ -37,7 +37,7 @@ public class RobotContainer {
   private final XboxController driveController = new XboxController(0);
   private final XboxController operatorController = new XboxController(1);
 
-  private final JoystickButton driveRB = new JoystickButton(operatorController, XboxController.Button.kRightBumper.value);
+  private final JoystickButton operateRB = new JoystickButton(operatorController, XboxController.Button.kRightBumper.value);
   private final JoystickButton operateA = new JoystickButton(operatorController, XboxController.Button.kA.value);
   private final JoystickButton operateY = new JoystickButton(operatorController, XboxController.Button.kY.value);
   private final JoystickButton operateX = new JoystickButton(operatorController, XboxController.Button.kX.value);
@@ -83,7 +83,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    driveRB.onTrue(
+    operateRB.toggleOnTrue(
       new MusicCommand(m_musicSubsystem)
     );
 
