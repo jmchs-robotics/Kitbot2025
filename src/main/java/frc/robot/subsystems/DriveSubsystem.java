@@ -23,6 +23,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.MotorConstants;
 
 @Logged
 public class DriveSubsystem extends SubsystemBase {
@@ -30,11 +31,6 @@ public class DriveSubsystem extends SubsystemBase {
     // This is the max speed you guys set in pathplanner
     // TODO: actually measure the max speed
     private final double maxSpeedMPS = 4.5;
-
-    private final TalonFX left1;
-    private final TalonFX right2;
-    private final TalonFX left3;
-    private final TalonFX right4;
 
     private DifferentialDrive differentialDrive;
 
@@ -44,12 +40,17 @@ public class DriveSubsystem extends SubsystemBase {
 
     private DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(21.5));
 
+    private final TalonFX left1;
+    private final TalonFX left3;
+    private final TalonFX right2;
+    private final TalonFX right4;
+
     public DriveSubsystem() {
 
-        left1 = new TalonFX(1);
-        left3 = new TalonFX(3);
-        right2 = new TalonFX(2);
-        right4 = new TalonFX(4);
+        left1 = MotorConstants.driveLeft1;
+        left3 = MotorConstants.driveLeft3;
+        right2 = MotorConstants.driveRight2;
+        right4 = MotorConstants.driveRight4;
 
         TalonFXConfiguration motorConfigLeft = new TalonFXConfiguration();
         motorConfigLeft.CurrentLimits.StatorCurrentLimit = 50;

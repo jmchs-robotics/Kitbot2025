@@ -5,36 +5,34 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.MotorConstants;
 
 public class MusicSubsystem extends SubsystemBase{
     
     private final Orchestra orchestra;
-    private final TalonFX driveMusicMotor1;
-    private final TalonFX driveMusicMotor2;
-    private final TalonFX driveMusicMotor3;
-    private final TalonFX driveMusicMotor4;
+    private final TalonFX MusicMotor1;
+    private final TalonFX MusicMotor2;
+    private final TalonFX MusicMotor3;
+    private final TalonFX MusicMotor4;
 
     public MusicSubsystem() {
         
         orchestra = new Orchestra();
-        driveMusicMotor1 = new TalonFX(1);
-        driveMusicMotor2 = new TalonFX(2);
-        driveMusicMotor3 = new TalonFX(3);
-        driveMusicMotor4 = new TalonFX(4);
+        MusicMotor1 = MotorConstants.driveLeft1;
+        MusicMotor2 = MotorConstants.driveRight2;
+        MusicMotor3 = MotorConstants.driveLeft3;
+        MusicMotor4 = MotorConstants.driveRight4;
 
-        orchestra.addInstrument(driveMusicMotor1);
-        orchestra.addInstrument(driveMusicMotor2);
-        orchestra.addInstrument(driveMusicMotor3);
-        orchestra.addInstrument(driveMusicMotor4);
+        orchestra.addInstrument(MusicMotor1);
+        orchestra.addInstrument(MusicMotor2);
+        orchestra.addInstrument(MusicMotor3);
+        orchestra.addInstrument(MusicMotor4);
         
-        var status = orchestra.loadMusic("pokemonThemeSong.chrp");
+        var status = orchestra.loadMusic("YMCA.chrp");
 
-        if (status.isOK()) {
-            orchestra.loadMusic("pokemonThemeSong.chrp");
-        } else {
+        if (!status.isOK()) {
             DriverStation.reportWarning("orchestra status bad", false);
         }
-
     }
 
     public void startSong() {

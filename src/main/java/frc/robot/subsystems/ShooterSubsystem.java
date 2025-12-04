@@ -6,14 +6,15 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.MotorConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    private final TalonFX shootermotor;
+    private final TalonFX shooterMotor;
 
     public ShooterSubsystem() {
 
-        shootermotor = new TalonFX(5);
+        shooterMotor = MotorConstants.CoralExtakeMotor;
 
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
         motorConfig.CurrentLimits.StatorCurrentLimit = 50;
@@ -21,7 +22,7 @@ public class ShooterSubsystem extends SubsystemBase {
         motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         motorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         
-        shootermotor.getConfigurator().apply(motorConfig);
+        shooterMotor.getConfigurator().apply(motorConfig);
 
     }
 
@@ -32,11 +33,11 @@ public class ShooterSubsystem extends SubsystemBase {
     public void simulationPeriodic() {}
 
     public void setMotor(double speed) {
-        shootermotor.set(speed);
+        shooterMotor.set(speed);
     }    
 
     public void stopMotor() {
-        shootermotor.set(0);
+        shooterMotor.set(0);
     }
 
 }
