@@ -12,6 +12,7 @@
 package frc.robot;
 
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -33,6 +34,11 @@ public class Constants {
     public static final class AlgaeConstants {
 
         public static final int wheelMotorId = 6;
+
+    }
+    public static final class LEDConstants {
+
+        public static final AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(150);
 
     }
 }
