@@ -41,9 +41,8 @@ public class LEDCommand extends Command {
         m_led.setLEDPattern(m_scrollingRainbow);
 
         LEDPattern blink = LEDPattern.kOff;
-        LEDPattern asymmetric = blink.blink(Seconds.of(2), Seconds.of(.5));
+        LEDPattern asymmetric;
         // LEDPattern sycned = blink.synchronizedBlink(RobotController::getRSLState);
-        asymmetric.applyTo(ledBuffer);
         // m_led.setData(ledBuffer);
 
         for(int i = 0; i < 20; i++) {
@@ -76,6 +75,11 @@ public class LEDCommand extends Command {
             else if (LEDColor == 6) {
                 blink = LEDPattern.solid(Color.kPink);
             }
+
+            asymmetric = blink.blink(Seconds.of(3), Seconds.of(1));
+            asymmetric.applyTo(ledBuffer);
+            m_led.setLEDPattern(asymmetric);
+
         }
 
     }
