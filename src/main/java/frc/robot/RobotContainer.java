@@ -38,7 +38,7 @@ public class RobotContainer {
   private final XboxController operatorController = new XboxController(1);
 
   private final JoystickButton operateA = new JoystickButton(operatorController, XboxController.Button.kA.value);
-  private final JoystickButton operateB = new JoystickButton(operatorController, XboxController.Button.Kb.value);
+  private final JoystickButton operateB = new JoystickButton(operatorController, XboxController.Button.kB.value);
   private final JoystickButton operateY = new JoystickButton(operatorController, XboxController.Button.kY.value);
   private final JoystickButton operateX = new JoystickButton(operatorController, XboxController.Button.kX.value);
   
