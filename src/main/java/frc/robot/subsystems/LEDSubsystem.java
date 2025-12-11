@@ -36,6 +36,10 @@ public class LEDSubsystem extends SubsystemBase {
 
     }
 
+    public void setLEDBuffer(AddressableLEDBuffer buffer) {
+        m_led.setData(buffer);
+    }
+
 
      
         

@@ -4,16 +4,19 @@ import static edu.wpi.first.units.Units.Seconds;
 
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.LEDConstants;
 import frc.robot.subsystems.LEDSubsystem;
 
 public class RandomLEDCommand extends Command {
-    
+
     private final LEDSubsystem m_led;
     private final AddressableLEDBuffer ledBuffer;
     private int LEDColor;
+    private Timer timer;
+    private LEDPattern blink = LEDPattern.kOff;
 
     public RandomLEDCommand(LEDSubsystem led) {
 
@@ -23,18 +26,17 @@ public class RandomLEDCommand extends Command {
 
     }
 
-    @Override 
-    public void initialize() {}
+    @Override
+    public void initialize() {
+        timer = new Timer();
+        timer.reset();
+        timer.start();
+    }
 
     @Override
     public void execute() {
 
-        LEDPattern blink = LEDPattern.kOff;
-        LEDPattern asymmetric = blink.blink(Seconds.of(2), Seconds.of(.5));
-        // LEDPattern sycned = blink.synchronizedBlink(RobotController::getRSLState);
-        asymmetric.applyTo(ledBuffer);
-        // m_led.setData(ledBuffer);
-
+        if (timer.get() % 0.5 < 0.05) {
             LEDColor = (int) (Math.random() * 7);
 
             if (LEDColor == 0) {
@@ -63,7 +65,14 @@ public class RandomLEDCommand extends Command {
 
             else if (LEDColor == 6) {
                 blink = LEDPattern.solid(Color.kPink);
+            }
+
         }
+
+        m_led.setLEDPattern(blink);
+        // LEDPattern sycned = blink.synchronizedBlink(RobotController::getRSLState);
+        // asymmetric.applyTo(ledBuffer);
+        // m_led.setLEDBuffer(ledBuffer);
 
     }
 
@@ -73,6 +82,7 @@ public class RandomLEDCommand extends Command {
     }
 
     @Override
-    public void end(boolean interrupted) {}
-    
+    public void end(boolean interrupted) {
+    }
+
 }

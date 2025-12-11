@@ -102,20 +102,18 @@ public class RobotContainer {
     operateRB.toggleOnTrue(
       Commands.sequence(
         new InstantCommand(() -> ledTimer.reset()),
-        new InstantCommand(() -> ledTimer.start())
-      )
-      .andThen(
-        Commands.either(
-          new RainbowLEDCommand(m_ledSubsystem), 
+        new InstantCommand(() -> ledTimer.start()),
+        Commands.repeatingSequence(Commands.either(
+          new RainbowLEDCommand(m_ledSubsystem),
           new RandomLEDCommand(m_ledSubsystem),
           () -> {
             return (int) ledTimer.get() % 8 == 0 ||
             (int) ledTimer.get() % 8 == 1 ||
             (int) ledTimer.get() % 8 == 2;
           }
-        )
-      ).handleInterrupt(
-        () -> ledTimer.stop()
+        ))
+      ).alongWith(
+        Commands.repeatingSequence(Commands.print("LED Timer: " + ledTimer.get()))
       )
     );
 
