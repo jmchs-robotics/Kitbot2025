@@ -10,12 +10,14 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -37,11 +39,14 @@ public class RobotContainer {
   private final XboxController driveController = new XboxController(0);
   private final XboxController operatorController = new XboxController(1);
 
+  private final JoystickButton operateRB = new JoystickButton(operatorController, XboxController.Button.kRightBumper.value);
   private final JoystickButton operateA = new JoystickButton(operatorController, XboxController.Button.kA.value);
   private final JoystickButton operateY = new JoystickButton(operatorController, XboxController.Button.kY.value);
   private final JoystickButton operateX = new JoystickButton(operatorController, XboxController.Button.kX.value);
   
   private final SendableChooser<Command> autoChooser;
+
+  private final Timer ledTimer = new Timer();
 
   /**
   * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -57,7 +62,7 @@ public class RobotContainer {
     m_drive.setDefaultCommand(new DefaultDriveCommand(m_drive, driveController));
     m_shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(m_shooterSubsystem));
     m_algaeSubsystem.setDefaultCommand(new DefaultAlgaeCommand(m_algaeSubsystem));
-    m_ledSubsystem.setDefaultCommand(new LEDCommand(m_ledSubsystem));
+    // m_ledSubsystem.setDefaultCommand(new RainbowLEDCommand(m_ledSubsystem));
     NamedCommands.registerCommand("ShootCoral", new ShootCoral(m_shooterSubsystem));
 
     // Build an auto chooser. This will use Commands.none() as the default option.
@@ -92,6 +97,26 @@ public class RobotContainer {
 
     operateX.whileTrue(
       new AlgaeExtake(m_algaeSubsystem)
+    );
+
+    operateRB.toggleOnTrue(
+      Commands.sequence(
+        new InstantCommand(() -> ledTimer.reset()),
+        new InstantCommand(() -> ledTimer.start())
+      )
+      .andThen(
+        Commands.either(
+          new RainbowLEDCommand(m_ledSubsystem), 
+          new RandomLEDCommand(m_ledSubsystem),
+          () -> {
+            return (int) ledTimer.get() % 8 == 0 ||
+            (int) ledTimer.get() % 8 == 1 ||
+            (int) ledTimer.get() % 8 == 2;
+          }
+        )
+      ).handleInterrupt(
+        () -> ledTimer.stop()
+      )
     );
 
   }

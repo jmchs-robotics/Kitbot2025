@@ -1,30 +1,21 @@
 package frc.robot.commands;
 
-import static edu.wpi.first.units.Units.InchesPerSecond;
-import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Seconds;
-import static edu.wpi.first.units.Units.Meters;
 
-import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.LEDPattern;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.LEDConstants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.LEDSubsystem;
 
-public class LEDCommand extends Command {
+public class RandomLEDCommand extends Command {
     
     private final LEDSubsystem m_led;
-    private static final Distance kLedSpacing = Meters.of(1 / 120.0);
-    private final LEDPattern m_rainbow = LEDPattern.rainbow(255, 128);
-    private final LEDPattern m_scrollingRainbow = m_rainbow.scrollAtAbsoluteSpeed(MetersPerSecond.of(1), kLedSpacing);
     private final AddressableLEDBuffer ledBuffer;
     private int LEDColor;
 
-    public LEDCommand(LEDSubsystem led) {
+    public RandomLEDCommand(LEDSubsystem led) {
 
         m_led = led;
         addRequirements(m_led);
@@ -32,20 +23,18 @@ public class LEDCommand extends Command {
 
     }
 
-    @Override
+    @Override 
     public void initialize() {}
-        
+
     @Override
     public void execute() {
 
-        m_led.setLEDPattern(m_scrollingRainbow);
-
         LEDPattern blink = LEDPattern.kOff;
-        LEDPattern asymmetric;
+        LEDPattern asymmetric = blink.blink(Seconds.of(2), Seconds.of(.5));
         // LEDPattern sycned = blink.synchronizedBlink(RobotController::getRSLState);
+        asymmetric.applyTo(ledBuffer);
         // m_led.setData(ledBuffer);
 
-        for(int i = 0; i < 20; i++) {
             LEDColor = (int) (Math.random() * 7);
 
             if (LEDColor == 0) {
@@ -74,12 +63,6 @@ public class LEDCommand extends Command {
 
             else if (LEDColor == 6) {
                 blink = LEDPattern.solid(Color.kPink);
-            }
-
-            asymmetric = blink.blink(Seconds.of(3), Seconds.of(1));
-            asymmetric.applyTo(ledBuffer);
-            m_led.setLEDPattern(asymmetric);
-
         }
 
     }
@@ -92,15 +75,4 @@ public class LEDCommand extends Command {
     @Override
     public void end(boolean interrupted) {}
     
-
-
-
-
-
-
-
-
-
-
-
 }
