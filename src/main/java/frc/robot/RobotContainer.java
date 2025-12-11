@@ -121,7 +121,10 @@ public class RobotContainer {
             (int) ledTimer.get() % 8 == 2;
           }
         )
-      ).handleInterrupt(
+      ).alongWith(
+        Commands.repeatingSequence(Commands.print("Timer: " + ledTimer.get()))
+      )
+      .handleInterrupt(
         () -> {
 	    timerResetFlag = true;
 	    ledTimer.stop();
