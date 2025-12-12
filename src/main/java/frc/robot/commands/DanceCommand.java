@@ -19,7 +19,7 @@ public class DanceCommand extends Command{
 
     @Override 
     public void execute() {
-        m_driveSubsystem.arcadeDrive(0, 1);
+        m_driveSubsystem.arcadeDrive(0, 0.5);
     }
 
     @Override

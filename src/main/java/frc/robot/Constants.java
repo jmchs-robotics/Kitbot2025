@@ -11,6 +11,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.units.measure.Angle;
 
 /**
@@ -30,10 +32,15 @@ public class Constants {
     *   public static final int kRightMotor2Port = 3; 
     * }
     */ 
-    public static final class AlgaeConstants {
+    public static final class MotorConstants {
 
-        public static final int wheelMotorId = 6;
+        public static final TalonFX driveLeft1 = new TalonFX(1);
+        public static final TalonFX driveLeft3 = new TalonFX(3);
+        public static final TalonFX driveRight2 = new TalonFX(2);
+        public static final TalonFX driveRight4 = new TalonFX(4);
+        
+        public static final TalonFX CoralExtakeMotor = new TalonFX(5);
+        public static final TalonFX algaeWheelMotor = new TalonFX(6);
 
     }
 }
-
