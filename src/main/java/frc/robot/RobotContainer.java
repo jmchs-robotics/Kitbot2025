@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -47,7 +48,7 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
 
   // Dumb dumb stupid flag
-  private boolean timerResetFlag = true;
+  // private boolean timerResetFlag = true;
   private final Timer ledTimer = new Timer();
 
   /**
@@ -102,33 +103,34 @@ public class RobotContainer {
     );
 
     operateRB.toggleOnTrue(
-      Commands.either(
-	  Commands.sequence(
-	    new InstantCommand(() -> ledTimer.reset()),
-	    new InstantCommand(() -> ledTimer.start()),
-	    new InstantCommand(() -> timerResetFlag = false)
-	  ),
-	  Commands.none(),
-	  () -> timerResetFlag
-      )
-      .andThen(
-        Commands.either(
-          new RainbowLEDCommand(m_ledSubsystem), 
-          new RandomLEDCommand(m_ledSubsystem),
-          () -> {
-            return (int) ledTimer.get() % 8 == 0 ||
-            (int) ledTimer.get() % 8 == 1 ||
-            (int) ledTimer.get() % 8 == 2;
+      Commands.startEnd(
+        () -> {
+          ledTimer.reset();
+          ledTimer.start();
+        },
+        () -> {
+          if (ledTimer.get() % 8.0 <= 2.0) {
+            CommandScheduler.getInstance().schedule(new RainbowLEDCommand(m_ledSubsystem));
+          } else {
+            CommandScheduler.getInstance().schedule(new RandomLEDCommand(m_ledSubsystem));
           }
-        )
-      ).alongWith(
-        Commands.repeatingSequence(Commands.print("Timer: " + ledTimer.get()))
+        }
       )
+      // .andThen(
+      //   Commands.either(
+      //     new RainbowLEDCommand(m_ledSubsystem), 
+      //     new RandomLEDCommand(m_ledSubsystem),
+      //     () -> {
+      //       return (int) ledTimer.get() % 8 == 0 ||
+      //       (int) ledTimer.get() % 8 == 1 ||
+      //       (int) ledTimer.get() % 8 == 2;
+      //     }
+      //   )
       .handleInterrupt(
         () -> {
-	    timerResetFlag = true;
-	    ledTimer.stop();
-	}
+          ledTimer.stop();
+          // CommandScheduler.getInstance().cancel(new RainbowLEDCommand(m_ledSubsystem), new RainbowLEDCommand(m_ledSubsystem));
+        }
       )
     );
 
