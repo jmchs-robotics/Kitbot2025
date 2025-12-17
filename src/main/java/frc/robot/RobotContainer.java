@@ -41,6 +41,7 @@ public class RobotContainer {
   private final XboxController operatorController = new XboxController(1);
 
   private final JoystickButton operateRB = new JoystickButton(operatorController, XboxController.Button.kRightBumper.value);
+  private final JoystickButton operateLB = new JoystickButton(operatorController, XboxController.Button.kLeftBumper.value);
   private final JoystickButton operateA = new JoystickButton(operatorController, XboxController.Button.kA.value);
   private final JoystickButton operateY = new JoystickButton(operatorController, XboxController.Button.kY.value);
   private final JoystickButton operateX = new JoystickButton(operatorController, XboxController.Button.kX.value);
@@ -103,35 +104,30 @@ public class RobotContainer {
     );
 
     operateRB.toggleOnTrue(
-      Commands.startEnd(
-        () -> {
-          ledTimer.reset();
-          ledTimer.start();
-        },
-        () -> {
-          if (ledTimer.get() % 8.0 <= 2.0) {
-            CommandScheduler.getInstance().schedule(new RainbowLEDCommand(m_ledSubsystem));
-          } else {
-            CommandScheduler.getInstance().schedule(new RandomLEDCommand(m_ledSubsystem));
-          }
-        }
-      )
-      // .andThen(
-      //   Commands.either(
-      //     new RainbowLEDCommand(m_ledSubsystem), 
-      //     new RandomLEDCommand(m_ledSubsystem),
-      //     () -> {
-      //       return (int) ledTimer.get() % 8 == 0 ||
-      //       (int) ledTimer.get() % 8 == 1 ||
-      //       (int) ledTimer.get() % 8 == 2;
+      new RainbowLEDCommand(m_ledSubsystem)
+    );
+
+    operateLB.toggleOnTrue(
+      new RandomLEDCommand(m_ledSubsystem)
+      // Commands.startEnd(
+      //   () -> {
+      //     ledTimer.reset();
+      //     ledTimer.start();
+      //   },
+      //   () -> {
+      //     if (ledTimer.get() % 8.0 <= 2.0) {
+      //       CommandScheduler.getInstance().schedule(new RainbowLEDCommand(m_ledSubsystem));
+      //     } else {
+      //       CommandScheduler.getInstance().schedule(new RandomLEDCommand(m_ledSubsystem));
       //     }
-      //   )
-      .handleInterrupt(
-        () -> {
-          ledTimer.stop();
-          // CommandScheduler.getInstance().cancel(new RainbowLEDCommand(m_ledSubsystem), new RainbowLEDCommand(m_ledSubsystem));
-        }
-      )
+      //   }
+      // )
+      // 
+      // .handleInterrupt(
+      //   () -> {
+      //     ledTimer.stop();
+      // }
+      
     );
 
   }
