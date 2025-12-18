@@ -10,23 +10,29 @@ import frc.robot.Constants.MotorConstants;
 public class MusicSubsystem extends SubsystemBase{
     
     private final Orchestra orchestra;
-    private final TalonFX MusicMotor1;
-    private final TalonFX MusicMotor2;
-    private final TalonFX MusicMotor3;
-    private final TalonFX MusicMotor4;
+    private final TalonFX musicMotor1;
+    private final TalonFX musicMotor2;
+    private final TalonFX musicMotor3;
+    private final TalonFX musicMotor4;
+    private final TalonFX musicMotor5;
+    private final TalonFX musicMotor6;
 
     public MusicSubsystem() {
         
         orchestra = new Orchestra();
-        MusicMotor1 = MotorConstants.driveLeft1;
-        MusicMotor2 = MotorConstants.driveRight2;
-        MusicMotor3 = MotorConstants.driveLeft3;
-        MusicMotor4 = MotorConstants.driveRight4;
+        musicMotor1 = MotorConstants.driveLeft1;
+        musicMotor2 = MotorConstants.driveRight2;
+        musicMotor3 = MotorConstants.driveLeft3;
+        musicMotor4 = MotorConstants.driveRight4;
+        musicMotor5 = MotorConstants.CoralExtakeMotor;
+        musicMotor6 = MotorConstants.algaeWheelMotor;
 
-        orchestra.addInstrument(MusicMotor1);
-        orchestra.addInstrument(MusicMotor2);
-        orchestra.addInstrument(MusicMotor3);
-        orchestra.addInstrument(MusicMotor4);
+        orchestra.addInstrument(musicMotor1);
+        orchestra.addInstrument(musicMotor2);
+        orchestra.addInstrument(musicMotor3);
+        orchestra.addInstrument(musicMotor4);
+        orchestra.addInstrument(musicMotor5);
+        orchestra.addInstrument(musicMotor6);
         
         var status = orchestra.loadMusic("YMCA.chrp");
 
