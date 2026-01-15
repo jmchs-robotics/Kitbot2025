@@ -69,8 +69,8 @@ public class DriveSubsystem extends SubsystemBase {
         right2.getConfigurator().apply(motorConfigRight);
         right4.getConfigurator().apply(motorConfigRight);
 
-        left3.setControl(new Follower(left1.getDeviceID(), false));
-        right4.setControl(new Follower(right2.getDeviceID(), false));
+        // left3.setControl(new Follower(left1.getDeviceID(), false));
+        // right4.setControl(new Follower(right2.getDeviceID(), false));
 
         differentialDrive = new DifferentialDrive(left1::set, right2::set);
 
