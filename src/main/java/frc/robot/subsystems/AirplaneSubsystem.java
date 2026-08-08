@@ -11,6 +11,8 @@ public class AirplaneSubsystem extends SubsystemBase {
 
     private final TalonFX airplaneMotor;
 
+    private final TalonFX airplaneMotorTwo;
+
     public AirplaneSubsystem() {
 
         airplaneMotor = new TalonFX(5);
@@ -23,6 +25,9 @@ public class AirplaneSubsystem extends SubsystemBase {
         
         airplaneMotor.getConfigurator().apply(motorConfig);
 
+        airplaneMotorTwo = new TalonFX(6);
+        airplaneMotorTwo.getConfigurator().apply(motorConfig);
+
     }
 
     @Override
@@ -33,10 +38,12 @@ public class AirplaneSubsystem extends SubsystemBase {
 
     public void setMotor(double speed) {
         airplaneMotor.set(speed);
+        airplaneMotorTwo.set(-speed);
     }    
 
     public void stopMotor() {
         airplaneMotor.set(0);
+        airplaneMotorTwo.set(0);
     }
 
 }
