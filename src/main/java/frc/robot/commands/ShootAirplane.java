@@ -19,7 +19,7 @@ public class ShootAirplane extends Command {
 
     @Override
     public void execute() {
-        m_shooterSubsystem.setMotor(0.8);
+        m_shooterSubsystem.setMotor(0.6);
     }
 
     @Override
